@@ -88,3 +88,5 @@ Follow these steps to get the API up and running:
     "Step 5": "You have reached your destination"
 }
 ```
+
+P.S. It might be better to have unit testing for BoardingPassSortingCommand 

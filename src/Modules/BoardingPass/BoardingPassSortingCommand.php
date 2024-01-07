@@ -4,6 +4,10 @@ namespace App\Modules\BoardingPass;
 
 use App\Modules\BoardingPass\Exceptions\NoStartingSourceFoundException;
 
+/**
+ * Command pattern, this whole class is responsible for only one thing:
+ * Take unsorted input, produce sorted output
+ */
 class BoardingPassSortingCommand
 {
     /** @var BoardingPass[] */
