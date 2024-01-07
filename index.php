@@ -12,12 +12,10 @@ $response = new Response();
 $controller = new ApiController();
 
 // Simple router for single controller
-switch ($request->getMethod()) {
-    case Request::METHOD_GET: $response = $controller->get(); break;
-
-    // This method will handle the whole task logic, ideally there should be a separate controller for that
-    case Request::METHOD_POST: $response = $controller->post($request); break;
-    default: $response =  new JsonResponse(["msg" => "Method not allowed"], Response::HTTP_METHOD_NOT_ALLOWED);
-}
+$response = match ($request->getMethod()) {
+    Request::METHOD_GET => $controller->get(),
+    Request::METHOD_POST => $controller->post($request),
+    default => new JsonResponse(["msg" => "Method not allowed"], Response::HTTP_METHOD_NOT_ALLOWED),
+};
 
 $response->send();
