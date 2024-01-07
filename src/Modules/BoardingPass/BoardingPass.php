@@ -2,9 +2,10 @@
 
 namespace App\Modules\BoardingPass;
 
+use App\Contracts\StringableContract;
 use App\Modules\BoardingPass\Types\IBoardingPassType;
 
-class BoardingPass
+class BoardingPass implements StringableContract
 {
     public function __construct(
         protected string $id,
@@ -46,6 +47,21 @@ class BoardingPass
     public function getSeat(): ?string
     {
         return $this->seat;
+    }
+
+    public function toString(): string
+    {
+        $string = "Take {$this->getType()->getName()} {$this->getId()} from {$this->getSource()} to {$this->getDestination()}.";
+
+        if ($this->getGate() !== null) {
+            $string .= " Gate: {$this->getGate()}.";
+        }
+
+        if ($this->getSeat() !== null) {
+            $string .= " Seat: {$this->getSeat()}";
+        }
+
+        return $string;
     }
 
 }

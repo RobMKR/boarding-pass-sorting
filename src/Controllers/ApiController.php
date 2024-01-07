@@ -6,6 +6,8 @@ use App\Modules\BoardingPass\BoardingPass;
 use App\Modules\BoardingPass\BoardingPassFactory;
 use App\Modules\BoardingPass\BoardingPassSortingCommand;
 use App\Modules\BoardingPass\Exceptions\InvalidTypeException;
+use App\Modules\BoardingPass\Exceptions\NoStartingSourceFoundException;
+use App\Modules\BoardingPass\OutputFormatter;
 use App\Validators\BoardingPassRequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,14 +55,18 @@ class ApiController
             $boardingPassCollection = array_map(function ($row) {
                 return BoardingPassFactory::fromArray($row);
             }, $data);
-        } catch (InvalidTypeException $e) {
+
+            $boardingPassSortingService = new BoardingPassSortingCommand($boardingPassCollection);
+            $sortedBoardingPasses = $boardingPassSortingService->sort()->getSorted();
+
+        } catch (InvalidTypeException | NoStartingSourceFoundException $e) {
             return new JsonResponse([
                 'errors' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $boardingPassSortingService = new BoardingPassSortingCommand($boardingPassCollection);
+        $outputFormatter = new OutputFormatter($sortedBoardingPasses);
 
-        return new JsonResponse($boardingPassSortingService->sort()->getSorted(), Response::HTTP_OK);
+        return new JsonResponse($outputFormatter->format(), Response::HTTP_OK);
     }
 }
