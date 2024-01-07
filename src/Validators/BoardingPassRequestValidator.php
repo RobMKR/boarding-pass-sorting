@@ -2,10 +2,11 @@
 
 namespace App\Validators;
 
+use App\Modules\BoardingPass\Types\TypeConstants;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints;
 
-class BoardingPassRequestValidator
+class BoardingPassRequestValidator implements IValidator
 {
     private Constraints\Collection $rules;
     private array $errors = [];
@@ -20,7 +21,7 @@ class BoardingPassRequestValidator
             'type' => [
                 new Constraints\Type(['type' => 'string']),
                 new Constraints\NotBlank(),
-                new Constraints\Choice(['choices' => ['plane', 'train', 'bus']]),
+                new Constraints\Choice(['choices' => array_keys(TypeConstants::TYPES_MAP)]),
             ],
             'source' => [
                 new Constraints\Type(['type' => 'string']),

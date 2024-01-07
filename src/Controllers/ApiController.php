@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Simple controller service GET and POST requests
+ */
 class ApiController
 {
     public function get(): JsonResponse
@@ -53,7 +56,7 @@ class ApiController
         } catch (InvalidTypeException $e) {
             return new JsonResponse([
                 'errors' => $e->getMessage()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $boardingPassSortingService = new BoardingPassSortingCommand($boardingPassCollection);

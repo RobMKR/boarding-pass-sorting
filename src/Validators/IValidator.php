@@ -1,13 +1,14 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
+namespace App\Validators;
 
 interface IValidator
 {
     /**
-     * @param Request $request
-     * @return void
-     * @throws
+     * Return array of errors if validation failed, otherwise NULL
+     *
+     * @param array $data
+     * @return array|null
      */
-    public function validate(Request $request): void;
+    public function validate(array $data): ?array;
 }

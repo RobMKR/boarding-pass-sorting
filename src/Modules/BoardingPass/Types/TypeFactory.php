@@ -12,9 +12,9 @@ class TypeFactory
     public static function fromString(string $type): IBoardingPassType
     {
         return match ($type) {
-            'plane' => new Plane(),
-            'train' => new Train(),
-            'bus' => new Bus(),
+            TypeConstants::TYPE_PLANE_ID => new Plane(),
+            TypeConstants::TYPE_TRAIN_ID => new Train(),
+            TypeConstants::TYPE_BUS_ID => new Bus(),
             default => throw new InvalidTypeException("Type $type is invalid and not supported."),
         };
     }
