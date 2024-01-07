@@ -90,3 +90,5 @@ Follow these steps to get the API up and running:
 ```
 
 P.S. It might be better to have unit testing for BoardingPassSortingCommand 
+
+P.S.2 Algorithm time complexity is O(n) + O(n) + O(n) for any size of the data.
